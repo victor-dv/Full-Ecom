@@ -42,13 +42,42 @@ class UserRepository {
         // gravar no array (records)
         records.push(atributos)
         //devolver para o arquivo
-      await this.writeAll(records)
+        await this.writeAll(records)
 
 
     }
 
-    async writeAll(records){
+    async getOne(id) { //Retorna o numero encontrado atraves do id
+        const records = await this.getAll()
+        const searchUser = records.find((record) => record.id === id)
+        console.log(searchUser)
+
+    }
+
+    async writeAll(records) {
         await fs.promises.writeFile(this.fileName, JSON.stringify(records))
+
+    }
+    async delete(id) {
+        const records = await this.getAll()
+        const deleteUser = records.filter((record) => record.id !== id)
+        console.log(deleteUser)
+        await this.writeAll(deleteUser)
+
+
+    }
+
+    async uptade(id, atributos) {
+        // pegar todos os records, em seguida vou buscae o elemento por id
+        const records = await this.getAll()
+        const toUpdate = records.find((record) => record.id === id)
+
+        Object.assign(toUpdate, atributos) // ELe faz os updates do objeto 
+
+        console.log(records)
+        await this.writeAll(records)
+
+
 
     }
 
@@ -63,10 +92,11 @@ class UserRepository {
 new UserRepository("users.json") */
 const test = async () => {
     const repo = new UserRepository("users.json")
-    await repo.create({ nome: "joao", email: "joao@gmail.com" })
-    const users = await repo.getAll()
+    /*   await repo.create({ nome: "joao", email: "joao@gmail.com" })
+      const users = await repo.getAll() */
+    repo.uptade('953fa87c', {age: "19"})
 
-    console.log(users)
+
 }
 
 test()
