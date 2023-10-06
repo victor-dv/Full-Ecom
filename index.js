@@ -7,6 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const authRotes = require("./rotas/auth/auth")
 
 app.use("/admin", authRotes)
+app.use(express.static("public"))
 
 
 app.listen(3001, () => {

@@ -1,11 +1,13 @@
 //Trabalhar com filesystem
-const fs = require('fs')
-const crypto = require('crypto')
-const Repository = require('./repository')
+const fs = require("fs");
+const crypto = require("crypto");
+
+const Repository = require("./repository");
 
 class UserRepository extends Repository {
-    // Vamos criar os metodos
+  apenasUser() {}
 }
-module.exports = new UserRepository("user.jsom")
+
+module.exports = new UserRepository("users.json");
 
 
